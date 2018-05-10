@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Conversations;
+namespace App\Conversations;
 
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -10,6 +10,7 @@ use App\Spending;
 use App\Category;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
+use BotMan\BotMan\Facades\BotMan;
 
 class AddSpending extends Conversation
 {
@@ -21,7 +22,8 @@ class AddSpending extends Conversation
         $this->spending = new Spending();
         $this->spending->concept = $concept;
         $this->spending->amount = $amount * 100;
-        $this->spending->telegram_id = $this->bot->getUser()->getId();
+        // TODO: Using $this->bot returns null.
+        $this->spending->telegram_id = BotMan::getUser()->getId();
     }
     /**
      * Start the conversation.

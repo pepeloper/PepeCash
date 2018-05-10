@@ -5,7 +5,7 @@ use App\Spending;
 $botman = resolve('botman');
 
 $botman->hears('(\d*[\.\,]?\d+?) (.*)', function($bot, $amount, $concept) {
-    $bot->startConversation(new App\Http\Conversations\AddSpending($concept, $amount));
+    $bot->startConversation(new App\Conversations\AddSpending($concept, $amount));
 });
 
 $botman->hears('records', function($bot) {
