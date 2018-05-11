@@ -32,50 +32,48 @@ class AddSpending extends Conversation
      */
     public function run()
     {
-        $buttons = [];
-        Category::all()->each(function($item) use (&$buttons) {
-            $buttons[] = Button::create($item->name)->value($item->id);
+        $buttons = Category::all()->map(function($item) {
+            return Button::create($item->name)->value($item->id);
         });
 
-        $question = Question::create("A que categoría quieres añadirlo? 🗒️")
-            ->fallback('Unable to ask question')
+        // Ask for spending category.
+        $question = Question::create(__('spending.category'))
+            ->fallback(__('bot.failed_question'))
             ->callbackId('ask_reason')
-            ->addButtons($buttons);
+            ->addButtons($buttons->toArray());
 
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
                 $this->spending->category()->associate(Category::find($answer->getValue()));
-
-                // Set here the created_at timestamp
-                $now = Carbon::now()->format('d/m/Y');
-                $question = Question::create("Cuándo ha sido el gasto? 📅 Puedes escribir la fecha ({$now})")
-                    ->fallback('Unable to ask question')
-                    ->callbackId('ask_reason')
-                    ->addButtons([
-                        Button::create('Now')->value('now'),
-                        Button::create('Tomorrow')->value('tomorrow'),
-                        Button::create('Yerterday')->value('yesterday'),
-                    ]);
-
-                $this->ask($question, function (Answer $answer) {
-                    if ($answer->isInteractiveMessageReply()) {
-                        switch($answer->getValue()) {
-                            case 'now':
-                                $date = Carbon::now();
-                            case 'yesterday':
-                                $date = Carbon::yesterday();
-                            case 'tomorrow':
-                                $date = Carbon::tomorrow();
-                        }
-                    }
-                    else {
-                        $date = Carbon::parse($answer->getValue());
-                    }
-                    $this->spending->created_at = $date;
-                    $this->spending->save();
-                    $this->say('Gasto guardado');
-                });
+                $this->askDate();
             }
+        });
+    }
+
+    public function askDate()
+    {
+        $question = Question::create(__('spending.when', ['date' => Carbon::now()->format('d/m/Y')]))
+            ->fallback(__('bot.failed_question'))
+            ->callbackId('ask_reason')
+            ->addButtons([
+                Button::create(__('spending.yesterday'))->value('yesterday'),
+                Button::create(__('spending.today'))->value('now'),
+            ]);
+
+        $this->ask($question, function (Answer $answer) {
+            if ($answer->isInteractiveMessageReply()) {
+                $date = ($answer->getValue() == 'yesterday') ? Carbon::yesterday() : Carbon::now();
+            } else {
+                $date = Carbon::parse($answer->getValue());
+            }
+
+            $this->spending->created_at = $date;
+            $this->spending->save();
+
+            $this->say(__('spending.saved', [
+                'amount' => $this->spending->amountFormatted,
+                'category' => $this->spending->category->name,
+            ]));
         });
     }
 }
