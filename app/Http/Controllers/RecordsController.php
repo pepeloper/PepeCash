@@ -26,11 +26,10 @@ class RecordsController extends Controller
 
                 $icon = config("icons.{$item->icon}", '💵');
                 return ["{$icon} {$item->name}" => $value];
+            })
+            ->each(function ($item, $key) use ($bot) {
+                $bot->reply("{$key}: {$item}€");
             });
-
-        $c->each(function ($item, $key) use ($bot) {
-            $bot->reply("{$key}: {$item}€");
-        });
 
         $total = $c->reduce(function ($carry, $item) {
             return $carry + $item;

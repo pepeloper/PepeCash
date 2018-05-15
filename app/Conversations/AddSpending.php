@@ -22,7 +22,6 @@ class AddSpending extends Conversation
         $this->spending = new Spending();
         $this->spending->concept = $concept;
         $this->spending->amount = $amount * 100;
-        // TODO: Using $this->bot returns null.
         $this->spending->telegram_id = BotMan::getUser()->getId();
     }
     /**
@@ -52,7 +51,7 @@ class AddSpending extends Conversation
 
     public function askDate()
     {
-        $question = Question::create(__('spending.when', ['date' => Carbon::now()->format('d/m/Y')]))
+        $question = Question::create(__('spending.when', ['date' => Carbon::now()->format('d-m-Y')]))
             ->fallback(__('bot.failed_question'))
             ->callbackId('ask_reason')
             ->addButtons([
