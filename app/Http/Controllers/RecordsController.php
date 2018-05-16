@@ -21,10 +21,10 @@ class RecordsController extends Controller
             }])
             ->mapWithKeys(function ($item) {
                 $value = $item->spendings->reduce(function ($carry, $item) {
-                    return $carry + $item->amountFormatted;
-                }, 0);
-
+                    return $item->amountFormatted;
+                });
                 $icon = config("icons.{$item->icon}", '💵');
+
                 return ["{$icon} {$item->name}" => $value];
             })
             ->each(function ($item, $key) use ($bot) {
