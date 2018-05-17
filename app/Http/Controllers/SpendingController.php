@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use BotMan\BotMan\BotMan;
 use App\Conversations\AddSpending;
+use BotMan\BotMan\BotMan;
 
 class SpendingController extends Controller
 {
@@ -17,7 +16,7 @@ class SpendingController extends Controller
     {
         $replies = [
             __('bot.add_spending'),
-            __('bot.check_records')
+            __('bot.check_records'),
         ];
 
         $bot->reply(__('bot.welcome'));

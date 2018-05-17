@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Spending extends Model
 {
-
     protected $fillable = ['name', 'amount', 'created_at'];
 
     public function category()

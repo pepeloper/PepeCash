@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use BotMan\BotMan\BotMan;
 use App\Category;
+use BotMan\BotMan\BotMan;
+use Illuminate\Support\Carbon;
 
 class RecordsController extends Controller
 {

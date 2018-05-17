@@ -2,19 +2,17 @@
 
 namespace App\Conversations;
 
-use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Outgoing\Question;
-use BotMan\BotMan\Messages\Outgoing\Actions\Button;
-use BotMan\BotMan\Messages\Conversations\Conversation;
-use App\Spending;
 use App\Category;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Carbon;
+use App\Spending;
 use BotMan\BotMan\Facades\BotMan;
+use BotMan\BotMan\Messages\Conversations\Conversation;
+use BotMan\BotMan\Messages\Incoming\Answer;
+use BotMan\BotMan\Messages\Outgoing\Actions\Button;
+use BotMan\BotMan\Messages\Outgoing\Question;
+use Illuminate\Support\Carbon;
 
 class AddSpending extends Conversation
 {
-
     protected $spending;
 
     public function __construct($concept, $amount)
@@ -24,6 +22,7 @@ class AddSpending extends Conversation
         $this->spending->amount = $amount * 100;
         $this->spending->telegram_id = BotMan::getUser()->getId();
     }
+
     /**
      * Start the conversation.
      *
@@ -31,7 +30,7 @@ class AddSpending extends Conversation
      */
     public function run()
     {
-        $buttons = Category::all()->map(function($item) {
+        $buttons = Category::all()->map(function ($item) {
             return Button::create($item->name)->value($item->id);
         });
 
@@ -70,7 +69,7 @@ class AddSpending extends Conversation
             $this->spending->save();
 
             $this->say(__('spending.saved', [
-                'amount' => $this->spending->amountFormatted,
+                'amount'   => $this->spending->amountFormatted,
                 'category' => $this->spending->category->name,
             ]));
         });
