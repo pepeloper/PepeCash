@@ -2,11 +2,10 @@
 
 namespace Tests\BotMan;
 
-use Illuminate\Support\Carbon;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Category;
 use App\Spending;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RecordsTest extends TestCase
 {
@@ -17,7 +16,7 @@ class RecordsTest extends TestCase
     {
         $category = factory(Category::class)->create([
             'name' => 'Food',
-            'icon' => 'food'
+            'icon' => 'food',
         ]);
         $icon = config("icons.{$category->icon}", '💵');
 

@@ -1,9 +1,10 @@
 <?php
+
 return [
-    'eat' => '🍴',
-    'travel' => '✈️',
-    'tech' => '💻',
-    'home' => '🏠',
+    'eat'     => '🍴',
+    'travel'  => '✈️',
+    'tech'    => '💻',
+    'home'    => '🏠',
     'monthly' => '🗓️',
-    'other' => '🌐',
+    'other'   => '🌐',
 ];

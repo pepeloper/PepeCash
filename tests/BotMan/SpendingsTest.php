@@ -2,9 +2,9 @@
 
 namespace Tests\BotMan;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class SpendingsTest extends TestCase
 {
@@ -15,7 +15,7 @@ class SpendingsTest extends TestCase
     {
         $replies = [
             __('bot.add_spending'),
-            __('bot.check_records')
+            __('bot.check_records'),
         ];
 
         $this->bot
@@ -29,7 +29,7 @@ class SpendingsTest extends TestCase
     {
         $category = factory(\App\Category::class)->create([
             'name' => 'Food',
-            'icon' => 'food'
+            'icon' => 'food',
         ]);
 
         $this->bot
@@ -39,7 +39,7 @@ class SpendingsTest extends TestCase
             ->assertQuestion(__('spending.when', ['date' => Carbon::now()->format('d-m-Y')]))
             ->receivesInteractiveMessage('now')
             ->assertReply(__('spending.saved', [
-                'amount' => '5.00',
+                'amount'   => '5.00',
                 'category' => $category->name,
             ]));
     }
@@ -49,7 +49,7 @@ class SpendingsTest extends TestCase
     {
         $category = factory(\App\Category::class)->create([
             'name' => 'Travel',
-            'icon' => 'travel'
+            'icon' => 'travel',
         ]);
 
         $this->bot
@@ -59,12 +59,12 @@ class SpendingsTest extends TestCase
             ->assertQuestion(__('spending.when', ['date' => Carbon::now()->format('d-m-Y')]))
             ->receives('22-12-2017')
             ->assertReply(__('spending.saved', [
-                'amount' => '4.00',
+                'amount'   => '4.00',
                 'category' => $category->name,
             ]));
 
         $this->assertDatabaseHas('spendings', [
-            'created_at' => '2017-12-22 00:00:00'
+            'created_at' => '2017-12-22 00:00:00',
         ]);
     }
 }
