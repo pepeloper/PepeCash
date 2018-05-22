@@ -6,6 +6,7 @@ use App\Category;
 use App\Spending;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Illuminate\Support\Carbon;
 
 class RecordsTest extends TestCase
 {
@@ -22,6 +23,11 @@ class RecordsTest extends TestCase
 
         $spending = factory(Spending::class)->create([
             'category_id' => $category->id,
+        ]);
+
+        $spending = factory(Spending::class)->create([
+            'category_id' => $category->id,
+            'created_at' => Carbon::now()->endOfMonth(),
         ]);
 
         $this->bot

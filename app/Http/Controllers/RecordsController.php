@@ -20,7 +20,7 @@ class RecordsController extends Controller
             }])
             ->mapWithKeys(function ($item) {
                 $value = $item->spendings->reduce(function ($carry, $item) {
-                    return $item->amountFormatted;
+                    return $carry + $item->amountFormatted;
                 });
                 $icon = config("icons.{$item->icon}", '💵');
 
