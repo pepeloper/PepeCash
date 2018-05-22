@@ -51,8 +51,7 @@ class RecordsController extends Controller
                 Carbon::now()->endOfMonth(),
             ]);
         }])
-        ->each(function($item, $key) {
-
+        ->each(function ($item, $key) {
         });
     }
 }
