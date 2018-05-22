@@ -55,10 +55,10 @@ class RecordsController extends Controller
 
         $category->spendings->each(function ($item, $key) use (&$response) {
             $response[] = __('spending.show', [
-                'id' => $item->id,
-                'amount' => $item->amountFormatted,
+                'id'      => $item->id,
+                'amount'  => $item->amountFormatted,
                 'concept' => $item->concept,
-                'date' => $item->created_at->format('d/m/Y'),
+                'date'    => $item->created_at->format('d/m/Y'),
             ]);
         });
 
