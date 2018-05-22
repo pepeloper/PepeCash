@@ -6,7 +6,6 @@ use App\Category;
 use App\Spending;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use Illuminate\Support\Carbon;
 
 class RecordsTest extends TestCase
 {
