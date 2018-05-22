@@ -52,10 +52,10 @@ class RecordsTest extends TestCase
             ])
             ->receives('records Tech')
             ->assertReply(__('spending.show', [
-                'id' => $spending->id,
-                'amount' => $spending->amountFormatted,
+                'id'      => $spending->id,
+                'amount'  => $spending->amountFormatted,
                 'concept' => $spending->concept,
-                'date' => $spending->created_at->format('d/m/Y'),
+                'date'    => $spending->created_at->format('d/m/Y'),
             ]));
     }
 }
