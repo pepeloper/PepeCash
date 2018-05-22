@@ -7,4 +7,5 @@ return [
     'yesterday'   => 'Yesterday',
     'today'       => 'Today',
     'total_month' => '💰 Total this month: :amount€',
+    'show'        => ':id - :amount :concept on :date',
 ];

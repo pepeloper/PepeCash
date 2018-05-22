@@ -39,19 +39,29 @@ class RecordsController extends Controller
 
     public function showByCategory(Botman $bot, $category_name)
     {
-        $category = Category::where('name', $category_name);
+        $category = Category::where('name', $category_name)->get()->first();
         if (!$category) {
             return $bot->reply("Can't find a matching category for {$category_name}");
         }
 
+        $response = [];
         $category->load(['spendings' => function ($query) use ($bot) {
             $query->where('telegram_id', $bot->getUser()->getId());
             $query->whereBetween('created_at', [
                 Carbon::now()->startOfMonth(),
                 Carbon::now()->endOfMonth(),
             ]);
-        }])
-        ->each(function ($item, $key) {
+        }]);
+
+        $category->spendings->each(function ($item, $key) use (&$response) {
+            $response[] = __('spending.show', [
+                'id' => $item->id,
+                'amount' => $item->amountFormatted,
+                'concept' => $item->concept,
+                'date' => $item->created_at->format('d/m/Y'),
+            ]);
         });
+
+        $bot->reply(implode(PHP_EOL, $response));
     }
 }
