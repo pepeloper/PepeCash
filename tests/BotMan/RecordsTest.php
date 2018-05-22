@@ -37,7 +37,7 @@ class RecordsTest extends TestCase
     {
         $category = factory(Category::class)->create([
             'name' => 'Tech',
-            'icon' => 'tech'
+            'icon' => 'tech',
         ]);
 
         $icon = config("icons.{$category->icon}", '💵');
