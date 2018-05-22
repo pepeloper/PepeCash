@@ -25,11 +25,6 @@ class RecordsTest extends TestCase
             'category_id' => $category->id,
         ]);
 
-        $spending = factory(Spending::class)->create([
-            'category_id' => $category->id,
-            'created_at' => Carbon::now()->endOfMonth(),
-        ]);
-
         $this->bot
             ->setUser([
                 'id' => $spending->telegram_id,
