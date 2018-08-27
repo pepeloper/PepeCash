@@ -21,12 +21,13 @@
         "laravel/tinker": "~1.0"
     },
     "require-dev": {
+        "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~6.0",
-        "filp/whoops": "~2.0",
         "nunomaduro/collision": "~2.0",
-        "symfony/thanks": "^1.0"
+        "phpunit/phpunit": "~6.0",
+        "symfony/thanks": "^1.0",
+        "wnx/laravel-stats": "^1.7"
     },
     "autoload": {
         "classmap": [
